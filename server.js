@@ -26,8 +26,4 @@ io.on('connection', socket => {
   })
 })
 
-<<<<<<< HEAD
 server.listen(process.env.PORT || 5000)
-=======
-server.listen(process.env.PORT)
->>>>>>> 4e2500d3d164f1b5db772f99c4df97e2c042973a
