@@ -10,14 +10,14 @@ var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
 
 const { PeerServer } = require('peer');
 const peerServer = PeerServer({ port: 443, 
-                            path: '/' ,
+                            path: '/peerjs' ,
                             ssl: {
                                 key: privateKey,
                                 cert: certificate
                               }
                         
                         });
-                        
+
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
