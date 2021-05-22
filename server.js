@@ -9,7 +9,7 @@ const { v4: uuidV4 } = require('uuid')
 // var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
 
 const { PeerServer } = require('peer');
-const peerServer = PeerServer({ port: 443, 
+const peerServer = PeerServer({ port: 9000, 
                             path: '/peerjs' ,
                             // ssl: {
                             //     key: privateKey,
