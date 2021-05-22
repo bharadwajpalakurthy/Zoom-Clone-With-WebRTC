@@ -5,16 +5,16 @@ const io = require('socket.io')(server)
 const { v4: uuidV4 } = require('uuid')
 
 //Peer server
-var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
-var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+// var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+// var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
 
 const { PeerServer } = require('peer');
 const peerServer = PeerServer({ port: 443, 
                             path: '/peerjs' ,
-                            ssl: {
-                                key: privateKey,
-                                cert: certificate
-                              }
+                            // ssl: {
+                            //     key: privateKey,
+                            //     cert: certificate
+                            //   }
                         
                         });
 
