@@ -1,11 +1,9 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
-const myPeer = new Peer({
-  config: {'iceServers': [
-    { url: 'stun:stun.l.google.com:19302' },
-    { url: 'turn:homeo@turn.bistri.com:80', credential: 'homeo' }
-  ]} /* Sample servers, please use appropriate ones */
-});
+const myPeer = new Peer({host:'/', 
+secure:true,
+ port:443,
+path: '/'})
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
