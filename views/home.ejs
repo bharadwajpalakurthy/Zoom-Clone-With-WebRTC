@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins";
+        }
+
+        h1 {
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 92px;
+            display: flex;
+            display: block;
+        }
+
+        button {
+            padding: 11px 53px;
+            background: #DC4433;
+            box-shadow: 0px 4px 16px rgba(220, 68, 51, 0.2);
+            border-radius: 16px;
+            border: none;
+            text-align: center;
+            color: white;
+            height: 52px;
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 18px;
+            font-family: Poppins;
+            justify-content: center;
+            align-items: center;
+            letter-spacing: 0.5px;
+            transition: background .2s ease;
+        }
+
+        button:hover {
+            background: #eb5746;
+
+        }
+
+        button:active {
+            background: #da4535;
+
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #videoElement {
+            background-color: #777;
+            height: 400px;
+            width: 560px;
+            object-fit: cover;
+            margin: 2rem 0;
+            /* background: url(image.png); */
+            filter: drop-shadow(0px 8px 32px rgba(13, 12, 17, 0.3));
+            border-radius: 16px;
+        }
+
+        .main {
+            display: flex;
+            justify-content: space-around;
+            flex: 2;
+            align-items: center;
+        }
+
+        .main h1 {
+            max-width: 1000px;
+        }
+
+        .lower {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .divider {
+            font-weight: 500;
+            font-size: 16px;
+            color: #A9A9A9;
+            margin: 0 6rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            display: inline-block;
+            content: "";
+            width: 7rem;
+            margin: 0 1rem;
+            transform: translateY(-5px);
+            border-top: 1px solid #DADADA;
+        }
+
+        #meeting-field {
+            height: 52px;
+            border: 2px solid #E3E3E3;
+            box-sizing: border-box;
+            border-radius: 15px;
+            padding: 1rem;
+            font-size: 14px;
+
+        }
+
+        #meeting-field::placeholder {
+
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 21px;
+            color: #8E8E8E;
+        }
+
+        #meeting-field:focus {
+            outline: none;
+            border: 2px solid #DC4433;
+
+            border-radius: 15px;
+
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            width: 52px;
+            padding: 0;
+            padding-top: 4px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .icon-btn {
+            background: #2B303D !important;
+            box-shadow: 0px 4px 16px rgba(43, 48, 61, 0.2);
+            border-radius: 16px;
+            transition: background .5s ease;
+        }
+
+        .off-btn {
+            background: #797B80 !important;
+            box-shadow: 0px 4px 16px rgba(43, 48, 61, 0.2);
+            border-radius: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="main">
+        <h1>Make <span style="color:#DC4433">&nbsp;Calls&nbsp;</span> to your Friends and Colleagues</h1>
+        <video height="400" autoplay="true" id="videoElement"></video>
+
+        </video>
+    </section>
+
+
+    <section class="lower">
+        <div class="form">
+            <input type="text" id="meeting-field" placeholder="Meeting ID">
+            <button>Join Meeting</button>
+        </div>
+        <p class="divider">or</p>
+        <div class="form">
+            <div class="actions">
+                <button class="icon-btn" id="video-btn"><img src="/video.svg"> </button>
+                <button class="icon-btn" id="audio-btn"><img src="/mic.svg"></button>
+            </div>
+            <button>Create Meeting</button>
+
+        </div>
+    </section>
+
+    <script>
+        var video = document.querySelector("#videoElement");
+
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function (err0r) {
+                    console.log("Something went wrong!");
+                });
+        }
+
+        let videoBtn = document.querySelector("#video-btn");
+        let audioBtn = document.querySelector("#audio-btn");
+
+        let videoState = true;
+        let audioState = true;
+
+        videoBtn.addEventListener('click', (e) => {
+                if (!videoState){
+                    videoBtn.innerHTML = `<img src="/video.svg">`;
+                    videoBtn.classList.remove("off-btn");
+
+                }
+                else{
+
+                    videoBtn.innerHTML = `<img src="/video-off.svg">`;
+                    videoBtn.classList.add("off-btn");
+                }
+            videoState = !videoState;
+        });
+
+        audioBtn.addEventListener('click', (e) => {
+                if (!audioState){
+                    audioBtn.innerHTML = `<img src="/mic.svg">`;
+                    audioBtn.classList.remove("off-btn");
+
+                }
+                else{
+
+                    audioBtn.innerHTML = `<img src="/mic-mute.svg">`;
+                    audioBtn.classList.add("off-btn");
+
+                }
+                audioState = !audioState;
+        });
+    </script>
+</body>
+
+</html>

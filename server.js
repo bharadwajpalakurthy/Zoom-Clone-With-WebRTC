@@ -8,15 +8,15 @@ const { v4: uuidV4 } = require('uuid')
 // var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
 // var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
 
-const { PeerServer } = require('peer');
-const peerServer = PeerServer({ port: 9000, 
-                            path: '/peerjs' ,
-                            // ssl: {
-                            //     key: privateKey,
-                            //     cert: certificate
-                            //   }
+// const { PeerServer } = require('peer');
+// const peerServer = PeerServer({ port: 9000, 
+//                             path: '/peerjs' ,
+//                             // ssl: {
+//                             //     key: privateKey,
+//                             //     cert: certificate
+//                             //   }
                         
-                        });
+//                         });
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -24,10 +24,14 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
   res.redirect(`/${uuidV4()}`)
 })
-
+app.get('/home', (req, res) => {
+  res.render('home')
+})
 app.get('/:room', (req, res) => {
   res.render('room', { roomId: req.params.room })
 })
+
+
 
 io.on('connection', socket => {
   socket.on('join-room', (roomId, userId) => {
