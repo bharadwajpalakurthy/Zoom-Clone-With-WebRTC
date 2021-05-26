@@ -20,7 +20,7 @@
             font-family: Poppins;
             font-style: normal;
             font-weight: 600;
-            font-size: 92px;
+            font-size: 78px;
             display: flex;
             display: block;
         }
@@ -76,6 +76,7 @@
         .main {
             display: flex;
             justify-content: space-around;
+            margin: 0 3rem;
             flex: 2;
             align-items: center;
         }
@@ -180,7 +181,7 @@
     <section class="lower">
         <div class="form">
             <input type="text" id="meeting-field" placeholder="Meeting ID">
-            <button>Join Meeting</button>
+            <button onclick="joinMeeting()">Join Meeting</button>
         </div>
         <p class="divider">or</p>
         <div class="form">
@@ -188,12 +189,24 @@
                 <button class="icon-btn" id="video-btn"><img src="/video.svg"> </button>
                 <button class="icon-btn" id="audio-btn"><img src="/mic.svg"></button>
             </div>
-            <button>Create Meeting</button>
+            <button onclick="createNewRoom()">Create Meeting</button>
 
         </div>
     </section>
 
     <script>
+
+        function createNewRoom() {
+            window.location.replace("https://" + window.location.hostname + "/");
+        }
+
+        function joinMeeting(){
+            const val  = document.querySelector("#meeting-field").value;
+            if( val.length > 5){
+                window.location.replace("https://" + window.location.hostname + "/" + val)
+
+            }
+        }
         var video = document.querySelector("#videoElement");
 
         if (navigator.mediaDevices.getUserMedia) {
