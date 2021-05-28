@@ -4,27 +4,35 @@ const myPeer = new Peer()
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
-navigator.mediaDevices.getUserMedia({
-  video: true,
-  audio: true
-}).then(stream => {
+
+
+var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+getUserMedia({video: true, audio: true}, function(stream) {
   addVideoStream(myVideo, stream)
 
   myPeer.on('call', call => {
+    // getUserMedia({video: true, audio: true}, function(stream) {
     call.answer(stream)
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {
       addVideoStream(video, userVideoStream)
     })
+  // }
   })
 
   socket.on('user-connected', userId => {
     connectToNewUser(userId, stream)
   })
-})
+}, function(err) {
+  console.log('Failed to get local stream' ,err);
+});
+
+
+
 
 socket.on('user-disconnected', userId => {
-  if (peers[userId]) peers[userId].close()
+  if (peers[userId])
+   peers[userId].close()
 })
 
 myPeer.on('open', id => {
