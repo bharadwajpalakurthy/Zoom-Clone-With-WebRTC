@@ -4,7 +4,7 @@ const myPeer = new Peer()
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
-
+let myStream;
 
 var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 getUserMedia({video: true, audio: true}, function(stream) {
@@ -12,6 +12,7 @@ getUserMedia({video: true, audio: true}, function(stream) {
 
   myPeer.on('call', call => {
     // getUserMedia({video: true, audio: true}, function(stream) {
+      myStream = stream;
     call.answer(stream)
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {
@@ -27,6 +28,20 @@ getUserMedia({video: true, audio: true}, function(stream) {
   console.log('Failed to get local stream' ,err);
 });
 
+// function replaceStream(peerConnection, mediaStream) {
+//   for(sender of peerConnection.getSenders()){
+//       if(sender.track.kind == "audio") {
+//           if(mediaStream.getAudioTracks().length > 0){
+//               sender.replaceTrack(mediaStream.getAudioTracks()[0]);
+//           }
+//       }
+//       if(sender.track.kind == "video") {
+//           if(mediaStream.getVideoTracks().length > 0){
+//               sender.replaceTrack(mediaStream.getVideoTracks()[0]);
+//           }
+//       }
+//   }
+// }
 
 
 
@@ -58,4 +73,12 @@ function addVideoStream(video, stream) {
     video.play()
   })
   videoGrid.append(video)
+}
+
+function muteMic(isEnabled) {
+  myStream.getAudioTracks().forEach(track => track.enabled = isEnabled);
+}
+
+function muteCam(isEnabled) {
+  myStream.getVideoTracks().forEach(track => track.enabled = isEnabled);
 }

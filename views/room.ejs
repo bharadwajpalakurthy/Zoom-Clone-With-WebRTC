@@ -33,6 +33,7 @@
         }
         body {
           min-height: 100vh;
+          width: 100%;
         }
 
     button {
@@ -120,6 +121,24 @@
           border-radius: 8px;
           cursor: pointer;
         }
+
+        @media only screen and (max-width: 600px) {
+          #video-grid {
+      grid-template-columns: repeat(auto-fill, 300px);
+margin-top: 4rem;
+      width: 100%;
+
+      gap: 2rem;
+    }
+
+    .link {
+      top: 1rem;
+    }
+
+    .actions{
+      position: fixed;
+    }
+        }
   </style>
 </head>
 <body>
@@ -152,6 +171,8 @@
               videoBtn.classList.add("off-btn");
           }
       videoState = !videoState;
+      //on video toggle
+      muteCam(videoState)
   });
 
   audioBtn.addEventListener('click', (e) => {
@@ -167,6 +188,7 @@
 
           }
           audioState = !audioState;
+          muteMic(audioState);
   });
 
   function endCall(){
